@@ -1,8 +1,8 @@
 import React from 'react';
-import { useAuth } from '../contexts/AuthContext';
+// import { useAuth } from '../contexts/AuthContext';
 
 const Admin: React.FC = () => {
-  const { user } = useAuth();
+  // const { user } = useAuth(); // TODO: Use user data when implementing admin features
 
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12">

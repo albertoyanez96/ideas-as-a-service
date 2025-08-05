@@ -1,7 +1,71 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRightIcon, CheckIcon } from '@heroicons/react/24/outline';
 import { SERVICE_TIERS } from '../types';
+import '../animations.css';
+
+const AnimatedCarousel: React.FC = () => {
+  const words = [
+    'Businesses',
+    'Products', 
+    'Services',
+    'Ventures',
+    'Solutions',
+    'Platforms',
+    'Companies',
+    'Startups',
+    'Enterprises'
+  ];
+
+  const colors = [
+    'linear-gradient(135deg, #FBBF24, #F59E0B, #FCD34D)', // Yellow/amber
+    'linear-gradient(135deg, #06B6D4, #0891B2, #67E8F9)', // Cyan
+    'linear-gradient(135deg, #10B981, #059669, #34D399)', // Emerald
+    'linear-gradient(135deg, #F472B6, #EC4899, #F9A8D4)', // Pink
+    'linear-gradient(135deg, #F97316, #EA580C, #FDBA74)', // Orange
+    'linear-gradient(135deg, #FB7185, #E11D48, #FDA4AF)', // Rose
+    'linear-gradient(135deg, #60A5FA, #3B82F6, #93C5FD)', // Blue
+    'linear-gradient(135deg, #EF4444, #DC2626, #F87171)', // Red
+    'linear-gradient(135deg, #14B8A6, #0D9488, #5EEAD4)'  // Teal
+  ];
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setIsAnimating(true);
+      
+      setTimeout(() => {
+        setCurrentIndex((prev) => (prev + 1) % words.length);
+        setIsAnimating(false);
+      }, 400); // Animation transition time
+      
+    }, 3000); // Change word every 3 seconds
+
+    return () => clearInterval(interval);
+  }, [words.length, colors.length]);
+
+  return (
+    <span className="relative inline-block text-center" style={{ width: '320px' }}>
+      <span 
+        className={`inline-block transition-all duration-800 ease-in-out transform ${
+          isAnimating 
+            ? 'opacity-0 -translate-y-6 scale-95 blur-sm' 
+            : 'opacity-100 translate-y-0 scale-100 blur-none'
+        }`}
+        style={{ 
+          background: colors[currentIndex],
+          WebkitBackgroundClip: 'text',
+          WebkitTextFillColor: 'transparent',
+          backgroundClip: 'text'
+        }}
+      >
+        {words[currentIndex]}
+      </span>
+    </span>
+  );
+};
 
 const Landing: React.FC = () => {
   return (
@@ -13,9 +77,11 @@ const Landing: React.FC = () => {
           <div className="text-center">
             <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-6">
               Turn Ideas into{' '}
-              <span className="text-yellow-300">Market-Ready</span>{' '}
-              Businesses
+              <span className="text-white-300">Market-Ready</span>
             </h1>
+            <div className="text-4xl md:text-6xl font-bold leading-tight mb-6">
+              <AnimatedCarousel />
+            </div>
             <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto opacity-90">
               From concept to launch, we provide everything you need to transform your business idea into a successful venture.
             </p>
