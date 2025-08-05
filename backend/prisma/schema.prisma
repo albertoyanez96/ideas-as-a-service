@@ -1,0 +1,174 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  password  String
+  role      Role     @default(CLIENT)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  ideas    Idea[]
+  payments Payment[]
+
+  @@map("users")
+}
+
+model Idea {
+  id          String     @id @default(cuid())
+  title       String
+  description String
+  industry    String
+  targetAudience String?
+  status      IdeaStatus @default(SUBMITTED)
+  tier        ServiceTier
+  price       Float
+  userId      String
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  deliverables Deliverable[]
+  payments     Payment[]
+  files        IdeaFile[]
+  messages     Message[]
+
+  @@map("ideas")
+}
+
+model Deliverable {
+  id          String            @id @default(cuid())
+  name        String
+  description String?
+  type        DeliverableType
+  fileUrl     String?
+  content     String?
+  status      DeliverableStatus @default(PENDING)
+  ideaId      String
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  idea Idea @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+
+  @@map("deliverables")
+}
+
+model Payment {
+  id              String        @id @default(cuid())
+  amount          Float
+  currency        String        @default("usd")
+  status          PaymentStatus @default(PENDING)
+  stripePaymentId String?       @unique
+  userId          String
+  ideaId          String
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  idea Idea @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+
+  @@map("payments")
+}
+
+model IdeaFile {
+  id        String   @id @default(cuid())
+  filename  String
+  originalName String
+  mimetype  String
+  size      Int
+  url       String
+  ideaId    String
+  createdAt DateTime @default(now())
+
+  idea Idea @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+
+  @@map("idea_files")
+}
+
+model Message {
+  id        String      @id @default(cuid())
+  content   String
+  sender    MessageSender
+  ideaId    String
+  createdAt DateTime    @default(now())
+
+  idea Idea @relation(fields: [ideaId], references: [id], onDelete: Cascade)
+
+  @@map("messages")
+}
+
+model Portfolio {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  industry    String
+  challenge   String
+  solution    String
+  results     String
+  imageUrl    String?
+  tier        ServiceTier
+  featured    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@map("portfolio")
+}
+
+enum Role {
+  CLIENT
+  ADMIN
+}
+
+enum IdeaStatus {
+  SUBMITTED
+  IN_REVIEW
+  IN_PROGRESS
+  COMPLETED
+  DELIVERED
+  CANCELLED
+}
+
+enum ServiceTier {
+  VALIDATION
+  BLUEPRINT
+  LAUNCH_READY
+  ENTERPRISE
+}
+
+enum DeliverableType {
+  MARKET_RESEARCH
+  BUSINESS_PLAN
+  BRAND_IDENTITY
+  FINANCIAL_MODEL
+  TEAM_RECOMMENDATIONS
+  LEGAL_STRUCTURE
+  MARKETING_STRATEGY
+  TECHNICAL_REQUIREMENTS
+}
+
+enum DeliverableStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  DELIVERED
+}
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+  REFUNDED
+}
+
+enum MessageSender {
+  CLIENT
+  ADMIN
+}

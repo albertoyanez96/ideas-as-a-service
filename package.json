@@ -1,0 +1,57 @@
+{
+  "name": "ideas-as-a-service",
+  "version": "1.0.0",
+  "description": "A modern web application for turning business ideas into market-ready businesses",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm start",
+    "build": "npm run build:backend && npm run build:frontend",
+    "build:backend": "cd backend && npm run build",
+    "build:frontend": "cd frontend && npm run build",
+    "install:all": "npm install && npm run install:backend && npm run install:frontend",
+    "install:backend": "cd backend && npm install",
+    "install:frontend": "cd frontend && npm install",
+    "db:generate": "cd backend && npm run db:generate",
+    "db:migrate": "cd backend && npm run db:migrate",
+    "db:seed": "cd backend && npm run db:seed",
+    "db:setup": "npm run db:generate && npm run db:migrate && npm run db:seed",
+    "lint": "npm run lint:backend && npm run lint:frontend",
+    "lint:backend": "cd backend && npm run lint || true",
+    "lint:frontend": "cd frontend && npm run lint || true",
+    "test": "npm run test:backend && npm run test:frontend",
+    "test:backend": "cd backend && npm test || true",
+    "test:frontend": "cd frontend && npm test || true",
+    "clean": "rm -rf node_modules frontend/node_modules backend/node_modules frontend/build backend/dist",
+    "postinstall": "npm run db:generate"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/ideas-as-a-service.git"
+  },
+  "keywords": [
+    "business",
+    "ideas",
+    "startup",
+    "entrepreneurship",
+    "react",
+    "nodejs",
+    "typescript",
+    "postgresql",
+    "stripe"
+  ],
+  "author": "Your Name <your.email@example.com>",
+  "license": "MIT"
+}
