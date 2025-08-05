@@ -7,6 +7,7 @@ import Landing from './pages/Landing';
 import SubmitIdea from './pages/SubmitIdea';
 import Dashboard from './pages/Dashboard';
 import Portfolio from './pages/Portfolio';
+import PortfolioDetail from './pages/PortfolioDetail';
 import ServiceTier from './pages/ServiceTier';
 import Admin from './pages/Admin';
 import Login from './pages/Login';
@@ -25,6 +26,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
               <Route path="/portfolio" element={<Portfolio />} />
+              <Route path="/portfolio/:id" element={<PortfolioDetail />} />
               <Route path="/services/:tier" element={<ServiceTier />} />
               <Route 
                 path="/submit" 

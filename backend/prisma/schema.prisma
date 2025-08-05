@@ -106,18 +106,33 @@ model Message {
 }
 
 model Portfolio {
-  id          String   @id @default(cuid())
-  title       String
-  description String
-  industry    String
-  challenge   String
-  solution    String
-  results     String
-  imageUrl    String?
-  tier        ServiceTier
-  featured    Boolean  @default(false)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              String   @id @default(cuid())
+  title           String
+  description     String
+  industry        String
+  challenge       String
+  solution        String
+  results         String
+  imageUrl        String?
+  tier            ServiceTier
+  featured        Boolean  @default(false)
+  clientName      String?
+  clientTitle     String?
+  testimonial     String?
+  duration        String?
+  teamSize        String?
+  budget          String?
+  technologies    String?
+  methodology     String?
+  keyMetrics      Json?
+  deliverables    Json?
+  timeline        Json?
+  beforeAfter     Json?
+  lessonsLearned  String?
+  nextSteps       String?
+  galleryImages   String[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   @@map("portfolio")
 }

@@ -1,0 +1,16 @@
+-- AlterTable
+ALTER TABLE "public"."portfolio" ADD COLUMN     "beforeAfter" JSONB,
+ADD COLUMN     "budget" TEXT,
+ADD COLUMN     "clientName" TEXT,
+ADD COLUMN     "clientTitle" TEXT,
+ADD COLUMN     "deliverables" JSONB,
+ADD COLUMN     "duration" TEXT,
+ADD COLUMN     "galleryImages" TEXT[],
+ADD COLUMN     "keyMetrics" JSONB,
+ADD COLUMN     "lessonsLearned" TEXT,
+ADD COLUMN     "methodology" TEXT,
+ADD COLUMN     "nextSteps" TEXT,
+ADD COLUMN     "teamSize" TEXT,
+ADD COLUMN     "technologies" TEXT,
+ADD COLUMN     "testimonial" TEXT,
+ADD COLUMN     "timeline" JSONB;
