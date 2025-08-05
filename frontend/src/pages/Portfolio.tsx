@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronRightIcon, StarIcon, ClockIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline';
+import { api } from '../services/api';
 
 interface PortfolioItem {
   id: string;
@@ -28,8 +29,8 @@ const Portfolio: React.FC = () => {
   useEffect(() => {
     const fetchPortfolios = async () => {
       try {
-        const response = await fetch('/api/portfolio');
-        const data = await response.json();
+        const response = await api.get('/portfolio');
+        const data = response.data;
         if (data.success) {
           setPortfolios(data.data);
         }
