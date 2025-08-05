@@ -50,7 +50,7 @@ ideas-as-a-service/
 
 ```bash
 # Clone the repository
-git clone <your-repo-url>
+git clone https://github.com/albertoyanez96/ideas-as-a-service.git
 cd ideas-as-a-service
 
 # Install backend dependencies
